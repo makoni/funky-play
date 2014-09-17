@@ -1,4 +1,4 @@
-Funkymusic extension for Safari
+Funkysouls.com extension for Safari
 ==========
 
 ![Funkymusic extension for Safari](http://arm1.ru/img/uploaded/images/rasshirenie-dlya-safari-dlya-funkysouls-com.png "Screenshot")
