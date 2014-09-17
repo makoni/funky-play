@@ -28,18 +28,16 @@
     </style>
 
     <script type="text/javascript">
+
     	var bars = safari.extension.bars;    	
     	var localStorage = window.localStorage;
-    	var visible = ( localStorage['visible'] === undefined ) ? true : localStorage['visible'];
-    	
+    	var visible = ( localStorage['visible'] === undefined ) ? true : localStorage['visible'];    	
 
 		var getLastRSS = function() {
 
-			var xhr = new XMLHttpRequest(),
+			var xhr = new XMLHttpRequest(), 
 				XML,
 				releasesXML,
-				title = '',
-				url = '',
 				releasesArray = [];				
 
 			var lastReleasesSpan = document.getElementById('lastReleases');		
@@ -58,13 +56,10 @@
 
 				XML = xhr.responseXML;
 				releasesXML = ( XML.getElementsByTagName('item') );
-				title = '';
-				url = '';
 
-				for ( var i = 0, k = 2; i<=k; i++) {
-					title = releasesXML[i].getElementsByTagName('title')[0].textContent;
-					url = releasesXML[i].getElementsByTagName('link')[0].textContent;
-					releasesArray.push( '<a target="_blank" href="' + url + '">' + title + '</a>' );
+				var k = (releasesXML.length >= 3) ? 3 : releasesXML.length-1;
+				for ( var i = 0; i<k; i++) {										
+					releasesArray.push( '<a target="_blank" href="' + releasesXML[i].getElementsByTagName('link')[0].textContent + '">' + releasesXML[i].getElementsByTagName('title')[0].textContent + '</a>' );
 				}
 				
 				lastReleasesSpan.innerHTML = releasesArray.join('&nbsp; | &nbsp;');	
@@ -83,13 +78,11 @@
 		
 		}
 
-		showHideBars = function () {
+		// показываем или скриываем наш тулбар во всех окнах Safari
+		showHideBars = function () {			
+			var method = visible ? 'show' : 'hide';
 			for ( var i = 0, k = bars.length; i<k; i++ ) {
-				if (true === visible) {				
-					bars[i].show();
-				} else {				
-					bars[i].hide();
-				}
+				bars[i][method]();
 			}
 		    localStorage['visible'] = visible;
 		};
@@ -99,7 +92,7 @@
 		// Привязываем действие к событию command (нажатие кнопки)
 		safari.application.addEventListener('command', function (e) {
 			if ('toggleToolbar' == e.command) {
-				visible = !(true === visible);				
+				visible = !visible;
 				showHideBars();
 			}
 		}, false);

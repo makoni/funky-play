@@ -31,4 +31,3 @@ for ( var i = 0, k = articles.length; i < k; i++ ) {
 
 	h2[0].appendChild(createNewLink('vkMusicPlayLink', artist));
 }
-
