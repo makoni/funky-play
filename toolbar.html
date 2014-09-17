@@ -83,11 +83,13 @@
 		
 		}
 
-		showHideBars = function () {			
-			if (true === visible) {				
-				bars[0].show();
-			} else {				
-				bars[0].hide();
+		showHideBars = function () {
+			for ( var i = 0, k = bars.length; i<k; i++ ) {
+				if (true === visible) {				
+					bars[i].show();
+				} else {				
+					bars[i].hide();
+				}
 			}
 		    localStorage['visible'] = visible;
 		};
