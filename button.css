@@ -1,0 +1,34 @@
+.yaMusicPlayLink, .vkMusicPlayLink {
+	margin-left: 8px !important;
+	padding: 4px 7px !important;	
+	font-size: 14px !important;
+	border-radius: 4px !important;	
+}
+
+.yaMusicPlayLink {
+	color: #ed4543 !important;
+	border: 1px solid #ed4543 !important;
+	background-color: white !important;
+}
+
+.vkMusicPlayLink {
+	background-color: #657d9c !important;
+	color: white !important;	
+	border: 1px solid #657d9c !important;
+}
+
+.yaMusicPlayLink:hover, .vkMusicPlayLink:hover {
+	text-decoration: none !important;
+	cursor: pointer;
+	font-weight: bold !important;
+}
+
+.yaMusicPlayLink:hover {
+	background-color: #ed4543 !important;
+	color: white !important;	
+}
+
+.vkMusicPlayLink:hover {
+	background-color: white !important;
+	color: #657d9c !important;
+}

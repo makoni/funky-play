@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Funkysouls Extension Bar</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <style>
+    	a {
+    		text-decoration: none;
+    		color: black;
+    		padding: 1px 9px;
+    		text-shadow: 1px 1px 2px #eee;	
+    	}
+
+    	a:hover {
+    		padding: 1px 8px;
+    		color: white;
+    		background-color: #8c8c8c;
+    		border: 1px solid #8c8c8c;
+    		border-radius: 12px;
+    		text-shadow: 1px 1px 2px black;
+    	}
+
+    	#lastReleases {
+    		margin-left: 9px;
+    	}
+    </style>
+
+    <script type="text/javascript">
+    	var bars = safari.extension.bars;    	
+    	var localStorage = window.localStorage;
+    	var visible = ( localStorage['visible'] === undefined ) ? true : localStorage['visible'];
+    	
+
+		var getLastRSS = function() {
+
+			var xhr = new XMLHttpRequest(),
+				XML,
+				releasesXML,
+				title = '',
+				url = '',
+				releasesArray = [];				
+
+			var lastReleasesSpan = document.getElementById('lastReleases');		
+
+			xhr.open('GET', 'http://funkysouls.com/feed.rss', true);
+
+			xhr.onreadystatechange = function() { 
+
+				if (xhr.readyState != 4) {
+					lastReleasesSpan.innerHTML = 'Could not connect to Funkysouls.';	
+					return; 
+				}
+					
+
+				releasesArray.length = 0;
+
+				XML = xhr.responseXML;
+				releasesXML = ( XML.getElementsByTagName('item') );
+				title = '';
+				url = '';
+
+				for ( var i = 0, k = 2; i<=k; i++) {
+					title = releasesXML[i].getElementsByTagName('title')[0].textContent;
+					url = releasesXML[i].getElementsByTagName('link')[0].textContent;
+					releasesArray.push( '<a target="_blank" href="' + url + '">' + title + '</a>' );
+				}
+				
+				lastReleasesSpan.innerHTML = releasesArray.join('&nbsp; | &nbsp;');	
+
+				var elements = document.getElementsByTagName('a');
+				for(var i = 0, len = elements.length; i < len; i++) {
+					elements[i].onclick = function () {
+						var newTab = safari.self.browserWindow.openTab();
+						newTab.url = this.href;
+				    }
+				}
+
+			}
+
+			xhr.send(null);
+		
+		}
+
+		showHideBars = function () {			
+			if (true === visible) {				
+				bars[0].show();
+			} else {				
+				bars[0].hide();
+			}
+		    localStorage['visible'] = visible;
+		};
+
+		showHideBars();
+
+		// Привязываем действие к событию command (нажатие кнопки)
+		safari.application.addEventListener('command', function (e) {
+			if ('toggleToolbar' == e.command) {
+				visible = !(true === visible);				
+				showHideBars();
+			}
+		}, false);
+    </script>
+</head>
+<body onload="getLastRSS(); setTimeout(getLastRSS, 1000*60*5);">
+	New releases: <span id="lastReleases"></span>
+</body>
+</html>
