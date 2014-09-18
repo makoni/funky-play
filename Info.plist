@@ -9,13 +9,13 @@
 	<key>CFBundleDisplayName</key>
 	<string>funky-play</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.arm1.ru.funky-play</string>
+	<string>com.arm1.ru.funkyplay</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Bars</key>
@@ -75,6 +75,8 @@
 			<string>Some</string>
 		</dict>
 	</dict>
+	<key>Update Manifest URL</key>
+	<string>https://rawgit.com/makoni/funky-play/master/update.plist</string>
 	<key>Website</key>
 	<string>https://github.com/makoni</string>
 </dict>

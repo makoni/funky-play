@@ -27,78 +27,86 @@
     	}
     </style>
 
-    <script type="text/javascript">
+    <script type="text/javascript">    	
+    	window.addEventListener('load', function(){ 
 
-    	var bars = safari.extension.bars;    	
-    	var localStorage = window.localStorage;
-    	var visible = ( localStorage['visible'] === undefined ) ? true : localStorage['visible'];    	
+	    	var bars = safari.extension.bars;    	
+	    	var visible = safari.extension.settings.getItem('visible');
+	    	
 
-		var getLastRSS = function() {
+			var getLastRSS = function() {
 
-			var xhr = new XMLHttpRequest(), 
-				XML,
-				releasesXML,
-				releasesArray = [];				
+				var xhr = new XMLHttpRequest(), 
+					XML,
+					releasesXML,
+					releasesArray = [];				
 
-			var lastReleasesSpan = document.getElementById('lastReleases');		
+				var lastReleasesSpan = document.getElementById('lastReleases');		
 
-			xhr.open('GET', 'http://funkysouls.com/feed.rss', true);
+				xhr.open('GET', 'http://funkysouls.com/feed.rss', true);
 
-			xhr.onreadystatechange = function() { 
+				xhr.onreadystatechange = function() { 
 
-				if (xhr.readyState != 4) {
-					lastReleasesSpan.innerHTML = 'Could not connect to Funkysouls.';	
-					return; 
-				}
+					if (xhr.readyState != 4) {
+						lastReleasesSpan.innerHTML = 'Could not connect to Funkysouls.';	
+						return; 
+					}
+						
+
+					releasesArray.length = 0;
+
+					XML = xhr.responseXML;
+					releasesXML = ( XML.getElementsByTagName('item') );
+
+					var k = (releasesXML.length >= 3) ? 3 : releasesXML.length-1;
+					for ( var i = 0; i<k; i++) {										
+						releasesArray.push( '<a target="_blank" href="' + releasesXML[i].getElementsByTagName('link')[0].textContent + '">' + releasesXML[i].getElementsByTagName('title')[0].textContent + '</a>' );
+					}
 					
+					lastReleasesSpan.innerHTML = releasesArray.join('&nbsp; | &nbsp;');	
 
-				releasesArray.length = 0;
+					var elements = document.getElementsByTagName('a');
+					for(var i = 0, len = elements.length; i < len; i++) {
+						elements[i].onclick = function () {
+							var newTab = safari.self.browserWindow.openTab();
+							newTab.url = this.href;
+					    }
+					}
 
-				XML = xhr.responseXML;
-				releasesXML = ( XML.getElementsByTagName('item') );
-
-				var k = (releasesXML.length >= 3) ? 3 : releasesXML.length-1;
-				for ( var i = 0; i<k; i++) {										
-					releasesArray.push( '<a target="_blank" href="' + releasesXML[i].getElementsByTagName('link')[0].textContent + '">' + releasesXML[i].getElementsByTagName('title')[0].textContent + '</a>' );
 				}
+
+				xhr.send(null);
+			
+			}
+
+			// показываем или скриываем наш тулбар во всех окнах Safari
+			var showHideBars = function () {
 				
-				lastReleasesSpan.innerHTML = releasesArray.join('&nbsp; | &nbsp;');	
+				var method = visible ? 'show' : 'hide';
 
-				var elements = document.getElementsByTagName('a');
-				for(var i = 0, len = elements.length; i < len; i++) {
-					elements[i].onclick = function () {
-						var newTab = safari.self.browserWindow.openTab();
-						newTab.url = this.href;
-				    }
+				for ( var i = 0, k = bars.length; i<k; i++ ) {
+					bars[i][method]();
 				}
 
-			}
+			};
 
-			xhr.send(null);
-		
-		}
+			showHideBars();
 
-		// показываем или скриываем наш тулбар во всех окнах Safari
-		showHideBars = function () {			
-			var method = visible ? 'show' : 'hide';
-			for ( var i = 0, k = bars.length; i<k; i++ ) {
-				bars[i][method]();
-			}
-		    localStorage['visible'] = visible;
-		};
+			// Привязываем действие к событию command (нажатие кнопки)
+			safari.application.addEventListener('command', function (e) {
+				if ('toggleToolbar' == e.command) {
+					visible = !visible;
+					showHideBars();
+					safari.extension.settings.setItem('visible', visible);
+				}
+			}, false);
 
-		showHideBars();
-
-		// Привязываем действие к событию command (нажатие кнопки)
-		safari.application.addEventListener('command', function (e) {
-			if ('toggleToolbar' == e.command) {
-				visible = !visible;
-				showHideBars();
-			}
-		}, false);
+			getLastRSS(); 
+			setTimeout(getLastRSS, 1000*60*5);
+		});
     </script>
 </head>
-<body onload="getLastRSS(); setTimeout(getLastRSS, 1000*60*5);">
+<body>
 	New releases: <span id="lastReleases"></span>
 </body>
 </html>
