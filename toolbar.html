@@ -32,7 +32,7 @@
 
 	    	var bars = safari.extension.bars;    	
 	    	var visible = safari.extension.settings.getItem('visible');
-	    	
+	    	var lastReleasesSpan = document.getElementById('lastReleases');
 
 			var getLastRSS = function() {
 
@@ -41,14 +41,14 @@
 					releasesXML,
 					releasesArray = [];				
 
-				var lastReleasesSpan = document.getElementById('lastReleases');		
+				lastReleasesSpan.innerHTML = 'Getting RSS...';				
 
 				xhr.open('GET', 'http://funkysouls.com/feed.rss', true);
 
 				xhr.onreadystatechange = function() { 
 
 					if (xhr.readyState != 4) {
-						lastReleasesSpan.innerHTML = 'Could not connect to Funkysouls.';	
+						lastReleasesSpan.innerHTML = 'Could not connect to Funkysouls.';
 						return; 
 					}
 						
@@ -102,7 +102,7 @@
 			}, false);
 
 			getLastRSS(); 
-			setTimeout(getLastRSS, 1000*60*5);
+			setInterval(getLastRSS, 1000*60*5);
 		});
     </script>
 </head>
