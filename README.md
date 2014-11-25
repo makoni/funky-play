@@ -1,7 +1,7 @@
 Funkysouls.com extension for Safari
 ==========
 
-![Funkymusic extension for Safari](http://arm1.ru/img/uploaded/images/rasshirenie-dlya-safari-dlya-funkysouls-com.png "Screenshot")
+![Funkymusic extension for Safari](http://arm1.ru/img/uploaded/images/funky-play-1-2.png "Screenshot")
 
 [ru]
 Расширение для Funkysouls.com.
