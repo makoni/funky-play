@@ -6,25 +6,32 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>
+    	body {
+    		text-align: center;
+    		font-weight: normal;
+    		font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
+    		font-size: 8.5pt;
+    	}
+
     	a {
     		text-decoration: none;
-    		color: black;
-    		padding: 1px 9px;
-    		text-shadow: 1px 1px 2px #eee;	
+    		color: #383738;
+    		padding: 1px 9px;    		
     	}
 
     	a:hover {
     		padding: 1px 8px;
     		color: white;
-    		background-color: #8c8c8c;
-    		border: 1px solid #8c8c8c;
-    		border-radius: 12px;
-    		text-shadow: 1px 1px 2px black;
+    		background-color: #b7b6b7;
+    		border: 1px solid #b7b6b7;
+    		border-radius: 4px;
     	}
 
     	#lastReleases {
     		margin-left: 9px;
     	}
+
+
     </style>
 
     <script type="text/javascript">    	
@@ -58,12 +65,12 @@
 					XML = xhr.responseXML;
 					releasesXML = ( XML.getElementsByTagName('item') );
 
-					var k = (releasesXML.length >= 3) ? 3 : releasesXML.length-1;
+					var k = (releasesXML.length >= 5) ? 5 : releasesXML.length-1;
 					for ( var i = 0; i<k; i++) {										
 						releasesArray.push( '<a target="_blank" href="' + releasesXML[i].getElementsByTagName('link')[0].textContent + '">' + releasesXML[i].getElementsByTagName('title')[0].textContent + '</a>' );
 					}
 					
-					lastReleasesSpan.innerHTML = releasesArray.join('&nbsp; | &nbsp;');	
+					lastReleasesSpan.innerHTML = releasesArray.join('&nbsp;  &nbsp;');	
 
 					var elements = document.getElementsByTagName('a');
 					for(var i = 0, len = elements.length; i < len; i++) {

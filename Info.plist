@@ -5,7 +5,7 @@
 	<key>Author</key>
 	<string>Makoni</string>
 	<key>Builder Version</key>
-	<string>9537.78.2</string>
+	<string>10600.1.25.1</string>
 	<key>CFBundleDisplayName</key>
 	<string>funky-play</string>
 	<key>CFBundleIdentifier</key>
@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Bars</key>
@@ -61,6 +61,8 @@
 	</dict>
 	<key>Description</key>
 	<string>Adding play button on Funkysouls.com</string>
+	<key>DeveloperIdentifier</key>
+	<string>345VKAJA5N</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
